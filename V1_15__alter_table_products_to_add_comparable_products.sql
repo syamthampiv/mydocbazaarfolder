@@ -1,0 +1,1 @@
+ALTER TABLE products ADD COLUMN comparable_products character varying[];

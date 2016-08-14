@@ -1,0 +1,1 @@
+alter table products alter column product_desc type character varying;

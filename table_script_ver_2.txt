@@ -1,0 +1,9 @@
+alter table company add about_company character varying(4000),
+  add location character varying(200),
+  add address hstore,
+  add assets hstore;
+
+alter table users drop column about_user,
+                    drop column location,
+                    drop column address,
+                    drop column assets;

@@ -1,0 +1,1 @@
+ALTER TABLE products ADD COLUMN delete_flag character(1);

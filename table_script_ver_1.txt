@@ -1,0 +1,105 @@
+CREATE TABLE tenant
+(
+  id uuid NOT NULL,
+  name character varying(200),
+  attribute hstore,
+  CONSTRAINT pk_tenant PRIMARY KEY (id)
+);
+
+CREATE TABLE company_type
+(
+  id uuid NOT NULL,
+  name character varying(200),
+  CONSTRAINT pk_company_type PRIMARY KEY (id)
+);
+
+CREATE TABLE company
+(
+  id uuid NOT NULL,
+  name character varying(200),
+  tenant_id uuid,
+  company_type uuid,
+  CONSTRAINT pk_company PRIMARY KEY (id),
+  CONSTRAINT fk_company_tenant FOREIGN KEY (tenant_id)
+      REFERENCES tenant (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT company_company_type_fkey FOREIGN KEY (company_type)
+      REFERENCES company_type (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+
+CREATE TABLE users
+(
+  id uuid NOT NULL,
+  name character varying(200),
+  email_id character varying(200),
+  pwd character varying(200),
+  about_user character varying(4000),
+  location character varying(200),
+  address hstore,
+  assets hstore,
+  user_role character vaying (200),
+  company_id uuid,
+  phone character varying(20),
+  activated boolean,
+  verified boolean,
+  CONSTRAINT pk_user_master PRIMARY KEY (id),
+  CONSTRAINT fk_user_master_company_id FOREIGN KEY (company_id)
+      REFERENCES company (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION 
+);
+
+
+CREATE TABLE assets
+(
+  id uuid NOT NULL,
+  name character varying(200),
+  file_name character varying(2000),
+  file_type character varying(200),
+  attributes hstore, 
+  CONSTRAINT pk_user_assets PRIMARY KEY (id) 
+);
+
+CREATE TABLE product_category
+(
+  id uuid NOT NULL,
+  category_code character varying(100),
+  tenant_id uuid,
+  category_name character varying(200), 
+  category_details json,
+  CONSTRAINT pk_product_category PRIMARY KEY (id),
+  CONSTRAINT fk_product_category_tenant_id FOREIGN KEY (tenant_id)
+      REFERENCES tenant (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE products
+(
+  id uuid NOT NULL,
+  name character varying(200),
+  model character varying(200),
+  hsn_code character varying(200),
+  ean_upc_code character varying(200),
+  factory_price json,
+  status product_status,
+  tenant_id uuid,
+  product_spec hstore,
+  product_details hstore,
+  product_category character varying(200)[],
+  company_id uuid,
+  company_name character varying(200),
+  product_desc character varying(200),
+  category_name character varying(200),
+  CONSTRAINT pk_products PRIMARY KEY (id),
+  CONSTRAINT fk_products_company_id FOREIGN KEY (company_id)
+      REFERENCES company (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_products_tenant_id FOREIGN KEY (tenant_id)
+      REFERENCES tenant (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+
+
+ 

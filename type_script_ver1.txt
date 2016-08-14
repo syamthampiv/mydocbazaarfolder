@@ -1,0 +1,1 @@
+create type product_status as ENUM ('DRAFT', 'PUBLISHED', 'ARCHIVED');

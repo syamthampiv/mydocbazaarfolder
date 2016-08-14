@@ -1,0 +1,1 @@
+ALTER TABLE product_specification ADD COLUMN is_mandatory character(3);

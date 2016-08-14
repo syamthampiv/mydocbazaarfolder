@@ -1,0 +1,1 @@
+ALTER TABLE accredition ADD COLUMN provider_id uuid;
